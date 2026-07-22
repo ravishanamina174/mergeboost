@@ -29,12 +29,13 @@ const tabs: Array<{ key: PostStatusFilter; label: string }> = [
   { key: "REJECTED", label: "Rejected" },
 ];
 
+// Updated to rely on text colors, allowing the background to remain clean white like the reference image
 const statusStyles: Record<PostStatus, string> = {
-  DRAFT: "bg-slate-100 text-slate-700",
-  PENDING_APPROVAL: "bg-amber-100 text-amber-700",
-  APPROVED: "bg-blue-100 text-blue-700",
-  REJECTED: "bg-rose-100 text-rose-700",
-  PUBLISHED: "bg-emerald-100 text-emerald-700",
+  DRAFT: "text-slate-600",
+  PENDING_APPROVAL: "text-amber-600",
+  APPROVED: "text-sky-600",
+  REJECTED: "text-rose-600",
+  PUBLISHED: "text-emerald-600",
 };
 
 const platformLabels: Record<string, string> = {
@@ -44,15 +45,6 @@ const platformLabels: Record<string, string> = {
   TIKTOK: "TikTok",
   FACEBOOK: "Facebook",
   YOUTUBE: "YouTube",
-};
-
-const platformStyles: Record<string, string> = {
-  X_TWITTER: "border-slate-300 text-slate-600",
-  LINKEDIN: "border-sky-300 text-sky-700",
-  INSTAGRAM: "border-pink-300 text-pink-700",
-  TIKTOK: "border-fuchsia-300 text-fuchsia-700",
-  FACEBOOK: "border-indigo-300 text-indigo-700",
-  YOUTUBE: "border-red-300 text-red-700",
 };
 
 export function ContentDashboard({ posts }: ContentDashboardProps) {
@@ -88,69 +80,77 @@ export function ContentDashboard({ posts }: ContentDashboardProps) {
   };
 
   return (
-    <div className="space-y-6">
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-slate-400">Total posts</p>
-            <Sparkles className="h-4 w-4 text-violet-400" />
-          </div>
-          <p className="mt-4 text-3xl font-semibold text-white">{metrics.total}</p>
+    <div className="mx-auto max-w-7xl space-y-12 pb-16 font-sans">
+      {/* Soft, Modern Hero Section */}
+      <section className="relative flex flex-col gap-12 overflow-hidden rounded-xl bg-slate-50 border border-slate-100 px-8 py-16 text-slate-900 md:px-12 lg:flex-row lg:items-end lg:justify-between lg:py-20">
+        <div className="relative z-10 max-w-2xl">
+          <h1 className="text-5xl font-light tracking-tighter md:text-6xl lg:text-7xl">
+            Crafting your <br />
+            <span className="font-serif italic text-slate-400">perfect content</span>
+          </h1>
+          <p className="mt-6 max-w-md text-base font-light leading-relaxed text-slate-500">
+            Step into a space where creativity becomes a way of life. Review, schedule, and publish your digital assets with unparalleled ease.
+          </p>
         </div>
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-slate-400">Pending approvals</p>
-            <Clock3 className="h-4 w-4 text-amber-400" />
+
+        <div className="relative z-10 flex flex-wrap gap-8 md:gap-12 lg:pb-4">
+          <div className="flex flex-col gap-2">
+            <span className="text-4xl font-bold tracking-tight lg:text-5xl">{metrics.total}</span>
+            <span className="text-xs uppercase tracking-widest text-slate-500">Total Assets</span>
           </div>
-          <p className="mt-4 text-3xl font-semibold text-white">{metrics.pending}</p>
-        </div>
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-slate-400">Scheduled posts</p>
-            <Rocket className="h-4 w-4 text-blue-400" />
+          <div className="flex flex-col gap-2">
+            <span className="text-4xl font-bold tracking-tight lg:text-5xl">{metrics.pending}</span>
+            <span className="text-xs uppercase tracking-widest text-slate-500">Pending</span>
           </div>
-          <p className="mt-4 text-3xl font-semibold text-white">{metrics.scheduled}</p>
-        </div>
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-slate-400">Published posts</p>
-            <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+          <div className="flex flex-col gap-2">
+            <span className="text-4xl font-bold tracking-tight lg:text-5xl">{metrics.scheduled}</span>
+            <span className="text-xs uppercase tracking-widest text-slate-500">Scheduled</span>
           </div>
-          <p className="mt-4 text-3xl font-semibold text-white">{metrics.published}</p>
+          <div className="flex flex-col gap-2 text-emerald-600">
+            <span className="text-4xl font-bold tracking-tight lg:text-5xl">{metrics.published}</span>
+            <span className="text-xs uppercase tracking-widest text-emerald-700">Published</span>
+          </div>
         </div>
       </section>
 
-      <section className="rounded-3xl border border-white/10 bg-slate-900/70 p-5">
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+      {/* Content Pipeline */}
+      <section className="space-y-8">
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <h2 className="text-xl font-semibold text-white">Content pipeline</h2>
-            <p className="text-sm text-slate-400">Review drafts, approvals, and published assets in one view.</p>
+            <h2 className="text-3xl font-light tracking-tight text-slate-900">Your content pipeline</h2>
+            <p className="mt-2 text-sm text-slate-500">Discover a myriad of choices available through our service.</p>
           </div>
-          <Link
-            href="/create"
-            className="inline-flex items-center gap-2 rounded-full bg-violet-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-violet-400"
-          >
-            <Sparkles className="h-4 w-4" />
-            New post
-          </Link>
-        </div>
+          
+          <div className="flex flex-col gap-3 md:flex-row md:items-center">
+            {/* Soft background tab navigation */}
+            <div className="flex flex-wrap gap-1 rounded-lg bg-slate-50 p-1 border border-slate-100">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.key}
+                  type="button"
+                  onClick={() => setActiveTab(tab.key)}
+                  className={`rounded-md px-5 py-2 text-sm font-medium transition-all duration-200 ${
+                    activeTab === tab.key 
+                      ? "bg-white text-slate-900 shadow-sm border border-slate-200/60" 
+                      : "bg-transparent text-slate-500 hover:text-slate-800 hover:bg-slate-100/50"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
 
-        <div className="mt-5 flex flex-wrap gap-2">
-          {tabs.map((tab) => (
-            <button
-              key={tab.key}
-              type="button"
-              onClick={() => setActiveTab(tab.key)}
-              className={`rounded-full px-3 py-2 text-sm font-medium transition ${
-                activeTab === tab.key ? "bg-white text-slate-900" : "bg-white/5 text-slate-300 hover:bg-white/10"
-              }`}
+            <Link
+              href="/create"
+              className="inline-flex items-center justify-center gap-2 rounded-md bg-slate-900 px-6 py-1.5 text-sm font-medium text-white transition-all hover:bg-slate-800 shadow-sm md:ml-4"
             >
-              {tab.label}
-            </button>
-          ))}
+              <Sparkles className="h-4 w-4" />
+              Create new
+            </Link>
+          </div>
         </div>
 
-        <div className="mt-6 grid gap-4">
+        <div className="grid gap-6">
           {visiblePosts.map((post) => {
             const isCreator = currentUser.role === "CONTENT_CREATOR";
             const isApprover = currentUser.role === "CONTENT_APPROVER";
@@ -160,154 +160,174 @@ export function ContentDashboard({ posts }: ContentDashboardProps) {
             const canPublish = (isApprover || isAdmin || isCreator) && (post.status === "APPROVED" || post.status === "PUBLISHED");
 
             return (
-              <article key={post.id} className="rounded-2xl border border-white/10 bg-slate-950/70 p-4 shadow-lg shadow-slate-950/20">
-                <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                  <div className="flex-1">
+              <article 
+                key={post.id} 
+                // Light gray card background to match the reference image
+                className="group relative flex flex-col gap-8 rounded-xl bg-slate-50/70 p-6 transition-all duration-300 hover:bg-slate-50 md:flex-row md:p-8 border border-slate-100"
+              >
+                {/* Image Area */}
+                <div className="w-full shrink-0 md:w-[280px] lg:w-[340px]">
+                  {post.mediaUrl ? (
+                    <Image
+                      src={post.mediaUrl}
+                      alt={post.title}
+                      width={400}
+                      height={400}
+                      className="h-64 w-full rounded-lg object-cover bg-white shadow-sm md:h-full md:min-h-[240px]"
+                    />
+                  ) : (
+                    <div className="flex h-64 w-full flex-col items-center justify-center rounded-lg bg-white shadow-sm text-sm text-slate-400 md:h-full md:min-h-[240px] border border-slate-100">
+                      <span className="font-serif italic">No visual asset</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Content Area */}
+                <div className="flex flex-1 flex-col justify-between py-1">
+                  <div>
+                    {/* Clean White Tags */}
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${statusStyles[post.status]}`}>
+                      <span className={`rounded-md bg-white border border-slate-200/60 shadow-sm px-3 py-1.5 text-xs font-semibold uppercase tracking-wider ${statusStyles[post.status]}`}>
                         {post.status.replace(/_/g, " ")}
                       </span>
-                      <span className="text-sm text-slate-400">{post.campaign?.name ?? "No campaign"}</span>
-                    </div>
-                    <h3 className="mt-3 text-lg font-semibold text-white">{post.title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-slate-400">{post.content}</p>
-
-                    <div className="mt-4 flex flex-wrap gap-2">
                       {post.platforms.map((platform) => (
-                        <span key={platform} className={`rounded-full border px-2.5 py-1 text-xs font-medium ${platformStyles[platform]}`}>
+                        <span key={platform} className="rounded-md bg-white border border-slate-200/60 shadow-sm px-3 py-1.5 text-xs font-medium text-slate-600">
                           {platformLabels[platform]}
                         </span>
                       ))}
                     </div>
 
-                    <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-slate-400">
-                      <span>Author: {post.author.name ?? post.author.email}</span>
-                      <span>Campaign: {post.campaign?.name ?? "Unassigned"}</span>
-                      <span>Engagement: {post.analytics?.reach ?? 0}</span>
+                    <h3 className="mt-5 text-2xl font-medium tracking-tight text-slate-900">
+                      {post.title}
+                    </h3>
+                    <p className="mt-3 text-base font-light leading-relaxed text-slate-500 line-clamp-3">
+                      {post.content}
+                    </p>
+
+                    {/* Metadata row */}
+                    <div className="mt-5 flex flex-wrap items-center gap-4 text-sm font-medium text-slate-400">
+                      <span className="flex items-center gap-2 text-slate-600">
+                        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white shadow-sm border border-slate-100 text-xs text-slate-500">@</span>
+                        {post.author.name ?? post.author.email}
+                      </span>
+                      <span className="text-slate-300">|</span>
+                      <span>Campaign: <span className="text-slate-600">{post.campaign?.name ?? "Unassigned"}</span></span>
+                      <span className="text-slate-300">|</span>
+                      <span>Reach: <span className="text-slate-600">{post.analytics?.reach ?? 0}</span></span>
                     </div>
 
                     {post.status === "REJECTED" && post.rejectionNote ? (
-                      <div className="mt-4 rounded-2xl border border-rose-400/20 bg-rose-500/10 p-3">
-                        <div className="flex items-center gap-2 text-sm font-semibold text-rose-300">
-                          <MessageSquareWarning className="h-4 w-4" />
-                          Feedback
+                      <div className="mt-6 flex items-start gap-3 rounded-lg bg-white p-4 border border-rose-100 shadow-sm">
+                        <MessageSquareWarning className="h-5 w-5 text-rose-500 shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-sm font-semibold text-rose-800">Rejection Feedback</p>
+                          <p className="mt-1 text-sm text-rose-600 leading-relaxed">{post.rejectionNote}</p>
                         </div>
-                        <p className="mt-2 text-sm text-rose-200">{post.rejectionNote}</p>
                       </div>
                     ) : null}
                   </div>
 
-                  <div className="w-full max-w-[220px] rounded-2xl border border-white/10 bg-white/5 p-2">
-                    {post.mediaUrl ? (
-                      <Image
-                        src={post.mediaUrl}
-                        alt={post.title}
-                        width={400}
-                        height={240}
-                        className="h-40 w-full rounded-xl object-cover"
+                  {/* Actions */}
+                  <div className="mt-8 flex flex-wrap items-center gap-3 pt-6 border-t border-slate-200/60">
+                    {canSubmit ? (
+                      <button
+                        type="button"
+                        onClick={() => runAction(() => submitPostForApproval(post.id))}
+                        className="rounded-md bg-slate-900 px-5 py-2 text-sm font-medium text-white transition-all hover:bg-slate-800 shadow-sm"
+                      >
+                        Submit for Approval
+                      </button>
+                    ) : null}
+
+                    {canApprove ? (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => runAction(() => approvePost(post.id))}
+                          className="rounded-md bg-slate-900 px-5 py-2 text-sm font-medium text-white transition-all hover:bg-slate-800 shadow-sm"
+                        >
+                          Approve Asset
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setRejectionPostId(post.id)}
+                          className="rounded-md bg-white border border-slate-200 px-5 py-2 text-sm font-medium text-slate-700 transition-all hover:border-slate-300 hover:bg-slate-50 shadow-sm"
+                        >
+                          Reject
+                        </button>
+                      </>
+                    ) : null}
+
+                    {canPublish ? (
+                      <button
+                        type="button"
+                        onClick={() => runAction(() => publishPost(post.id))}
+                        className="rounded-md bg-emerald-600 px-5 py-2 text-sm font-medium text-white transition-all hover:bg-emerald-500 shadow-sm"
+                      >
+                        Publish Now
+                      </button>
+                    ) : null}
+
+                    {isAdmin ? (
+                      <button
+                        type="button"
+                        onClick={() => runAction(() => deletePost(post.id))}
+                        className="rounded-md bg-white border border-rose-200 px-5 py-2 text-sm font-medium text-rose-600 transition-all hover:bg-rose-50 hover:border-rose-300 ml-auto shadow-sm"
+                      >
+                        Delete
+                      </button>
+                    ) : null}
+                  </div>
+
+                  {/* Inline Rejection UI */}
+                  {rejectionPostId === post.id ? (
+                    <div className="mt-5 rounded-lg bg-white p-5 border border-slate-200 shadow-sm">
+                      <label className="text-sm font-semibold text-slate-800" htmlFor={`rejection-${post.id}`}>
+                        Provide Rejection Reasoning
+                      </label>
+                      <textarea
+                        id={`rejection-${post.id}`}
+                        value={rejectionNote}
+                        onChange={(event) => setRejectionNote(event.target.value)}
+                        className="mt-3 min-h-[100px] w-full rounded-md border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700 outline-none focus:border-slate-400 focus:bg-white transition-all"
+                        placeholder="Detail the compliance or content issue the creator needs to address..."
                       />
-                    ) : (
-                      <div className="flex h-40 items-center justify-center rounded-xl bg-white/5 text-sm text-slate-500">
-                        No image yet
+                      <div className="mt-4 flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (!rejectionNote.trim()) return;
+                            runAction(() => rejectPost(post.id, rejectionNote));
+                            setRejectionPostId(null);
+                            setRejectionNote("");
+                          }}
+                          className="rounded-md bg-slate-900 px-5 py-2 text-sm font-medium text-white transition-all hover:bg-slate-800"
+                        >
+                          Confirm
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setRejectionPostId(null);
+                            setRejectionNote("");
+                          }}
+                          className="rounded-md bg-transparent px-5 py-2 text-sm font-medium text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-all"
+                        >
+                          Cancel
+                        </button>
                       </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {canSubmit ? (
-                    <button
-                      type="button"
-                      onClick={() => runAction(() => submitPostForApproval(post.id))}
-                      className="rounded-full bg-violet-500 px-3 py-2 text-sm font-medium text-white hover:bg-violet-400"
-                    >
-                      Submit for Approval
-                    </button>
-                  ) : null}
-
-                  {canApprove ? (
-                    <>
-                      <button
-                        type="button"
-                        onClick={() => runAction(() => approvePost(post.id))}
-                        className="rounded-full bg-emerald-500 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-400"
-                      >
-                        Approve
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setRejectionPostId(post.id)}
-                        className="rounded-full bg-rose-500 px-3 py-2 text-sm font-medium text-white hover:bg-rose-400"
-                      >
-                        Reject
-                      </button>
-                    </>
-                  ) : null}
-
-                  {canPublish ? (
-                    <button
-                      type="button"
-                      onClick={() => runAction(() => publishPost(post.id))}
-                      className="rounded-full bg-sky-500 px-3 py-2 text-sm font-medium text-white hover:bg-sky-400"
-                    >
-                      Publish Now
-                    </button>
-                  ) : null}
-
-                  {isAdmin ? (
-                    <button
-                      type="button"
-                      onClick={() => runAction(() => deletePost(post.id))}
-                      className="rounded-full border border-white/10 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/10"
-                    >
-                      Delete
-                    </button>
-                  ) : null}
-                </div>
-
-                {rejectionPostId === post.id ? (
-                  <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-3">
-                    <label className="text-sm font-medium text-slate-300" htmlFor={`rejection-${post.id}`}>
-                      Rejection reason
-                    </label>
-                    <textarea
-                      id={`rejection-${post.id}`}
-                      value={rejectionNote}
-                      onChange={(event) => setRejectionNote(event.target.value)}
-                      className="mt-2 min-h-24 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-sm text-white outline-none"
-                      placeholder="Add the compliance or content issue the creator should address."
-                    />
-                    <div className="mt-3 flex gap-2">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          if (!rejectionNote.trim()) {
-                            return;
-                          }
-                          runAction(() => rejectPost(post.id, rejectionNote));
-                          setRejectionPostId(null);
-                          setRejectionNote("");
-                        }}
-                        className="rounded-full bg-rose-500 px-3 py-2 text-sm font-medium text-white"
-                      >
-                        Confirm rejection
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setRejectionPostId(null);
-                          setRejectionNote("");
-                        }}
-                        className="rounded-full border border-white/10 px-3 py-2 text-sm font-medium text-slate-300"
-                      >
-                        Cancel
-                      </button>
                     </div>
-                  </div>
-                ) : null}
+                  ) : null}
+                </div>
               </article>
             );
           })}
+
+          {visiblePosts.length === 0 && (
+            <div className="flex flex-col items-center justify-center rounded-xl bg-slate-50 py-24 text-center border border-slate-100">
+              <span className="font-serif text-2xl italic text-slate-400">No content available in this view</span>
+            </div>
+          )}
         </div>
       </section>
     </div>

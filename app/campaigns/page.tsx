@@ -2,12 +2,12 @@ import Link from "next/link";
 
 export default function CampaignsPage() {
   return (
-    <div className="space-y-6 rounded-3xl border border-white/10 bg-slate-900/70 p-8">
+    <div className="space-y-6 rounded-[2rem] border border-slate-200/80 bg-white p-8 shadow-sm">
       <div>
-        <p className="text-sm font-medium uppercase tracking-[0.3em] text-violet-400">Campaigns</p>
-        <h2 className="mt-2 text-2xl font-semibold text-white">Campaign planning and portfolio views</h2>
+        <p className="text-sm font-medium uppercase tracking-[0.3em] text-slate-500">Campaigns</p>
+        <h2 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">Campaign planning and portfolio</h2>
       </div>
-      <Link href="/" className="inline-flex rounded-full bg-white px-4 py-2 text-sm font-medium text-slate-900">
+      <Link href="/" className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-2.5 text-sm font-medium text-white transition-all hover:bg-slate-800">
         Return home
       </Link>
     </div>
