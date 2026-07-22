@@ -1,13 +1,90 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
+// MergeBoost SMCMP — Prisma Schema
+// https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  CONTENT_CREATOR
+  CONTENT_APPROVER
+}
+
+enum PostStatus {
+  DRAFT
+  PENDING_APPROVAL
+  APPROVED
+  REJECTED
+  PUBLISHED
+}
+
+enum Platform {
+  X_TWITTER
+  LINKEDIN
+  INSTAGRAM
+  TIKTOK
+  FACEBOOK
+  YOUTUBE
+}
+
+model User {
+  id            String   @id @default(cuid())
+  name          String?
+  email         String   @unique
+  role          Role     @default(CONTENT_CREATOR)
+  consentGiven  Boolean  @default(false)
+  postsCreated  Post[]   @relation("PostAuthor")
+  postsApproved Post[]   @relation("PostApprover")
+}
+
+model Campaign {
+  id             String    @id @default(cuid())
+  name           String
+  objective      String
+  targetAudience String
+  startDate      DateTime
+  endDate        DateTime?
+  posts          Post[]
+}
+
+model Post {
+  id            String     @id @default(cuid())
+  title         String
+  content       String
+  mediaUrl      String?
+  hashtags      String[]
+  platforms     Platform[]
+  status        PostStatus @default(DRAFT)
+  scheduledAt   DateTime?
+  rejectionNote String?
+  authorId      String
+  approverId    String?
+  campaignId    String?
+  createdAt     DateTime   @default(now())
+
+  author    User       @relation("PostAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  approver  User?      @relation("PostApprover", fields: [approverId], references: [id], onDelete: SetNull)
+  campaign  Campaign?  @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  analytics Analytics?
+
+  @@index([authorId])
+  @@index([approverId])
+  @@index([campaignId])
+  @@index([status])
+}
+
+model Analytics {
+  id       String @id @default(cuid())
+  postId   String @unique
+  likes    Int    @default(0)
+  shares   Int    @default(0)
+  comments Int    @default(0)
+  reach    Int    @default(0)
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
